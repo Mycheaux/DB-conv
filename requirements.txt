@@ -1,0 +1,8 @@
+lightning==2.5.1
+wandb
+numpy==2.0.2
+scipy==1.14.1
+pandas==2.2.2
+torch==2.6.0+cu124 --index-url https://download.pytorch.org/whl/cu124
+plotly
+yaml

@@ -1,0 +1,11 @@
+data_path: "data/preprocessed"
+
+x_train : 'za_train.npy'
+x_val : 'za_val.npy'
+x_test : 'za_test.npy'
+
+y_train: 'zb_train.npy'
+y_val : 'zb_val.npy'
+y_test : 'zb_test.npy'
+
+

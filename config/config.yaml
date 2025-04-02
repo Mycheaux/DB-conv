@@ -1,0 +1,14 @@
+grad_clip : None
+dropout_rate : 0.0
+num_epochs : 500
+batch_size : 24
+l1_lamb : 1
+l2_lamb : 1
+pt_lamb : 0
+hce_lamb : 0.001
+tje_lamb : 0.1
+
+mapper_repeat : 1
+inverter_repeat : 1
+
+

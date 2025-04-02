@@ -1,0 +1,6 @@
+Mapper_input_size : 56
+Mapper_output_size : 31
+Mapper_learning_rate : None
+Inverter_input_size : 31 
+Inverter_output_size : 56
+Inverter_learning_rate : None
