@@ -4,3 +4,5 @@ b2_m : 0.999
 lr_i : 0.0002
 b1_i : 0.5
 b2_i : 0.999
+k_in_ktwin_for_loss : 5 # integer top 5 or top 10 (not in percentage, it's absolute value)
+k_in_ktwin_for_test : 10 # this is top 10% 

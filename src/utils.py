@@ -1,5 +1,8 @@
 import numpy as np
-import scipy as sp
+import os
+import subprocess
+import pkg_resources
+import re
 
 
 
@@ -63,15 +66,23 @@ def k_twin(matrix_a:np.array,matrix_b:np.array, k:int, method:str):
             np.fill_diagonal(dist_matrix_b, np.inf)
     # print (dist_matrix_b)
 
-    k_closest_a = np.zeros((n_a,k))
-    for i in range (0,n_a):
-        k_closest_a[i] = np.argsort(dist_matrix_a[i])[:k]
-    # print(k_closest_a)
-
-    k_closest_b = np.zeros((n_b,k))
-    for i in range (0,n_b):
-        k_closest_b[i] = np.argsort(dist_matrix_b[i])[:k]
-    # print(k_closest_b)
+    if k<= n_a:
+        k_closest_a = np.zeros((n_a,k))
+        for i in range (0,n_a):
+            k_closest_a[i] = np.argsort(dist_matrix_a[i])[:k]
+    else:
+        k_closest_a = np.zeros((n_a,n_a))
+        for i in range (0,n_a):
+            k_closest_a[i] = np.argsort(dist_matrix_a[i])[:n_a]
+        
+    if k<= n_b:
+        k_closest_b = np.zeros((n_b,k))
+        for i in range (0,n_b):
+            k_closest_b[i] = np.argsort(dist_matrix_b[i])[:k]
+    else:
+        k_closest_b = np.zeros((n_b,n_b))
+        for i in range (0,n_b):
+            k_closest_b[i] = np.argsort(dist_matrix_b[i])[:n_b]
 
     total_count = 0
     for i in range (0, n_a ):
@@ -109,15 +120,23 @@ def k_twin_ind(matrix_a:np.array,matrix_b:np.array, k:int, method:str):
             np.fill_diagonal(dist_matrix_b, np.inf)
     # print (dist_matrix_b)
 
-    k_closest_a = np.zeros((n_a,k))
-    for i in range (0,n_a):
-        k_closest_a[i] = np.argsort(dist_matrix_a[i])[:k]
-    # print(k_closest_a)
+    if k<= n_a:
+        k_closest_a = np.zeros((n_a,k))
+        for i in range (0,n_a):
+            k_closest_a[i] = np.argsort(dist_matrix_a[i])[:k]
+    else:
+        k_closest_a = np.zeros((n_a,n_a))
+        for i in range (0,n_a):
+            k_closest_a[i] = np.argsort(dist_matrix_a[i])[:n_a]
 
-    k_closest_b = np.zeros((n_b,k))
-    for i in range (0,n_b):
-        k_closest_b[i] = np.argsort(dist_matrix_b[i])[:k]
-    # print(k_closest_b)
+    if k<= n_b:
+        k_closest_b = np.zeros((n_b,k))
+        for i in range (0,n_b):
+            k_closest_b[i] = np.argsort(dist_matrix_b[i])[:k]
+    else:
+        k_closest_b = np.zeros((n_b,n_b))
+        for i in range (0,n_b):
+            k_closest_b[i] = np.argsort(dist_matrix_b[i])[:n_b]
 
     total_count = 0
     JI_list = []
@@ -127,3 +146,68 @@ def k_twin_ind(matrix_a:np.array,matrix_b:np.array, k:int, method:str):
         JI_ind = count/(k)
         JI_list.append(JI_ind)
     return JI_list
+
+
+
+def get_gpu_info():
+    """
+    Retrieves GPU information using the `nvidia-smi` command.
+    Returns:
+        str: GPU details as a string.
+    """
+    gpu_info = os.popen("nvidia-smi").read().strip()
+    return gpu_info
+
+
+def install_requirements():
+    """
+    Installs packages from requirements.txt only if they are not already installed,
+    handling --index-url for specific packages like torch.
+    """
+    try:
+        print("Checking and installing dependencies from requirements.txt...")
+        
+        # Read the requirements.txt file
+        with open("requirements.txt", "r") as file:
+            requirements = file.readlines()
+        
+        # Check each package in requirements.txt
+        for requirement in requirements:
+            package = requirement.strip()
+            
+            # Extract package name and version (if any)
+            match = re.match(r"([a-zA-Z0-9\-]+(?:==[a-zA-Z0-9.]+)?)(.*)", package)
+            if match:
+                package_name = match.group(1)
+                extra_args = match.group(2).strip()
+                
+                try:
+                    # Check if the package is already installed
+                    pkg_resources.require(package_name)
+                    print(f"Package '{package_name}' is already installed.")
+                except pkg_resources.DistributionNotFound:
+                    # Install the package if not found
+                    print(f"Installing missing package: {package}")
+                    install_command = [os.sys.executable, "-m", "pip3", "install", package]
+                    
+                    # Append extra arguments if any (e.g., --index-url)
+                    if extra_args:
+                        install_command.extend(extra_args.split())
+                    
+                    subprocess.check_call(install_command)
+                except pkg_resources.VersionConflict as e:
+                    print(f"Version conflict for package '{package_name}': {e}. Attempting to resolve...")
+                    install_command = [os.sys.executable, "-m", "pip", "install", "--upgrade", package]
+                    
+                    # Append extra arguments if any (e.g., --index-url)
+                    if extra_args:
+                        install_command.extend(extra_args.split())
+                    
+                    subprocess.check_call(install_command)
+            else:
+                print(f"Skipping invalid requirement: {package}")
+
+        print("Dependency check and installation complete!")
+    except Exception as e:
+        print(f"Error during dependency installation: {e}")
+        exit(1)

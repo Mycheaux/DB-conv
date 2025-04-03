@@ -26,25 +26,28 @@ from torch.utils.data import TensorDataset, Dataset, DataLoader
 # from torch.utils.tensorboard import SummaryWriter
 # from torchsummary import summary
 
-data_path_yaml = read_config('data_path.yaml')
+data_path_yaml = read_config('config/data_path.yaml')
 data_path =  data_path_yaml.get('data_path')
-x_train_path = data_path + data_path.get('x_train','za_train.npy')
-x_val_path = data_path + data_path.get('x_val','za_val.npy')
-x_test_path = data_path + data_path.get('x_test','za_test.npy')
-y_train_path = data_path + data_path.get('y_train','zb_train.npy')
-y_val_path = data_path + data_path.get('y_val','zb_val.npy')
-y_test_path = data_path + data_path.get('y_test','zb_test.npy')
+x_train_path = data_path + '/'+ data_path_yaml.get('x_train','za_train.npy')
+x_val_path = data_path + '/'+ data_path_yaml.get('x_val','za_val.npy')
+x_test_path = data_path + '/'+ data_path_yaml.get('x_test','za_test.npy')
+y_train_path = data_path + '/'+ data_path_yaml.get('y_train','zb_train.npy')
+y_val_path = data_path + '/'+ data_path_yaml.get('y_val','zb_val.npy')
+y_test_path = data_path + '/'+ data_path_yaml.get('y_test','zb_test.npy')
 
 config = read_config('config/config.yaml')
 batch_size = config.get('batch_size', 24)
 
 x_train = np.load(str(x_train_path))
 x_val = np.load(str(x_val_path))
-x_test = np.load(str(y_train_path))
+x_test = np.load(str(x_test_path))
 
 y_train= np.load(str(y_train_path))
 y_val = np.load(str(y_val_path))
 y_test = np.load(str(y_test_path))
+
+print(x_train.shape, y_train.shape)
+print(x_val.shape, y_val.shape)
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 x_train_tt = torch.tensor(x_train,dtype=torch.float)#.unsqueeze(1)

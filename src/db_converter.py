@@ -33,6 +33,7 @@ b2_m = adv_config.get('b2_m', 0.999)
 lr_i = adv_config.get('lr_i', 0.0001)
 b1_i = adv_config.get('b1_i', 0.9)
 b2_i = adv_config.get('b2_i', 0.999)
+k_in_ktwin_for_loss = adv_config.get('k_in_ktwin_for_loss', 5)
 
 config = read_config('config/config.yaml')
 batch_size = config.get('batch_size', 24)
@@ -43,6 +44,8 @@ l2_lamb = config.get('l2_lamb', 1)
 pt_lamb = config.get('pt_lamb',0)
 hce_lamb = config.get('hce_lamb',0.001)
 tji_lamb = config.get('tje_lam',0.1)
+mapper_repeat = config.get('mapper_repeat',1)
+inverter_repeat = config.get('inverter_repeat',1)
 
 
 
@@ -58,7 +61,7 @@ Inverter_learning_rate = arch_config.get('Inverter_input_size', None)
 
 
 
-class RegenrativeModel(pl.LightningModule):
+class db_converter(pl.LightningModule):
 
     def __init__(
         self,
@@ -111,7 +114,7 @@ class RegenrativeModel(pl.LightningModule):
         hce_loss = havrda_charvat_entropy(hat, true, parameter_a=1.3)
         l1_loss = F.l1_loss(hat, true)
         l2_loss = F.mse_loss(hat, true)
-        tji = 1 - k_twin(hat.detach().cpu().numpy(), true.detach().cpu().numpy(), 5, "L2")
+        tji = 1 - k_twin(hat.detach().cpu().numpy(), true.detach().cpu().numpy(), k_in_ktwin_for_loss, "L2")
         loss = l1_lamb * l1_loss + l2_lamb * l2_loss + pt_lamb *pt + hce_lamb * hce_loss + tji_lamb * tji
         self.log("train/inverting_loss", loss, on_step=False, on_epoch=True)
         self.log("train/inverting_l1_loss", l1_loss, on_step=False, on_epoch=True)
@@ -125,7 +128,7 @@ class RegenrativeModel(pl.LightningModule):
     def training_step(self, batch, batch_idx):
         optimizer_m, optimizer_i = self.optimizers()
 
-        for i in range (0,2):
+        for i in range (0,mapper_repeat):
             #mapper
             self.toggle_optimizer(optimizer_m)
             data, label = batch
@@ -139,7 +142,7 @@ class RegenrativeModel(pl.LightningModule):
             optimizer_m.step()
             optimizer_m.zero_grad()
             self.untoggle_optimizer(optimizer_m)
-        for i in range (0,1):
+        for i in range (0,inverter_repeat):
             #inverter
             self.toggle_optimizer(optimizer_i)
             data, label = batch
