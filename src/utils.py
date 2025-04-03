@@ -3,7 +3,7 @@ import os
 import subprocess
 import pkg_resources
 import re
-
+from pathlib import Path
 
 
 
@@ -211,3 +211,19 @@ def install_requirements():
     except Exception as e:
         print(f"Error during dependency installation: {e}")
         exit(1)
+        
+        
+
+
+def create_directories(output_data_path, load_project_name, load_model_name, load_epoch_name):
+    # Define the directory paths
+    dir1 = Path(output_data_path) / load_project_name
+    dir2 = dir1 / load_model_name
+    dir3 = dir2 / load_epoch_name
+
+    # Create the directories recursively
+    dir1.mkdir(parents=True, exist_ok=True)
+    dir2.mkdir(parents=True, exist_ok=True)
+    dir3.mkdir(parents=True, exist_ok=True)
+
+    print(f"Directories created:\n{dir1}\n{dir2}\n{dir3}")

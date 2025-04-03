@@ -46,8 +46,8 @@ y_train= np.load(str(y_train_path))
 y_val = np.load(str(y_val_path))
 y_test = np.load(str(y_test_path))
 
-print(x_train.shape, y_train.shape)
-print(x_val.shape, y_val.shape)
+# print(x_train.shape, y_train.shape)
+# print(x_val.shape, y_val.shape)
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 x_train_tt = torch.tensor(x_train,dtype=torch.float)#.unsqueeze(1)

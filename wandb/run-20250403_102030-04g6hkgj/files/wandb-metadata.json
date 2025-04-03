@@ -1,0 +1,35 @@
+{
+  "os":  "macOS-15.3.2-x86_64-i386-64bit",
+  "python":  "CPython 3.12.9",
+  "startedAt":  "2025-04-03T08:20:31.028590Z",
+  "program":  "/Users/supratim/Library/CloudStorage/OneDrive-Personal/ScienceReseaech/DB-conv/main.py",
+  "codePath":  "main.py",
+  "git":  {
+    "remote":  "https://github.com/Mycheaux/DB-conv.git",
+    "commit":  "be34ab12719a889b90ae23371b2e387df01e6e40"
+  },
+  "email":  "supratim.das@students.iiserpune.ac.in",
+  "root":  ".",
+  "host":  "dhcp-172-21-18-48.wlan.uni-hamburg.de.local",
+  "executable":  "/Users/supratim/opt/anaconda3/envs/dl3/bin/python3",
+  "codePathLocal":  "main.py",
+  "cpu_count":  8,
+  "cpu_count_logical":  8,
+  "disk":  {
+    "/":  {
+      "total":  "494384795648",
+      "used":  "457977307136"
+    },
+    "/System/Volumes/Data":  {
+      "total":  "494384795648",
+      "used":  "457977307136"
+    }
+  },
+  "memory":  {
+    "total":  "17179869184"
+  },
+  "cpu":  {
+    "count":  8,
+    "countLogical":  8
+  }
+}

@@ -14,6 +14,12 @@ inverter_repeat : 1
 every_n_epochs : 10 # After this many epochs a model would be saved usually 100
 
 output_model_path : 'output/models'
+output_data_path : 'output/data'
 output_plots_path : 'output/plots'
 project_name : 'app-test' # this is name of project for weights and bias, all expeciments/models under this project will be plotted together 
 model_name : 'm0t0' #this is name of each model, use own coding to remember experiments for different hyperparameters, m is model t is training replicate
+
+load_model_path : 'output/models' # usualy same as output_model_path, unless you download external model for inference alone.
+load_project_name : 'app-test' # usually you want to use models of same project
+load_model_name : 'm0t0' # usually same as model_name, unless you download external model for inference
+load_epoch_name : 'last.ckpt' #epoch of the model

@@ -5,7 +5,7 @@
 
 import os
 from src.train import train_model  # Assume train.py has a train_model() function
-from src.test import run_tests 
+from test.generate_ouput import run_test
  
 
 
@@ -37,4 +37,4 @@ if __name__ == '__main__':
     
     # Execute testing workflow
     print("\n=== Starting Testing ===")
-    run_tests()    # Runs tests and saves output files``
+    run_test()    # Runs tests and saves output files``
