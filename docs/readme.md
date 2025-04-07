@@ -1,4 +1,5 @@
-## Bi-directional DB-converter 
+# Bi-directional DB-converter 
+This Github Repository contains the tool used in the paper titled `Self-supervised generative AI enables conversion of two non-overlapping cohorts`. 
 ### It uses two NN architectures trained in tandem
 
 To run the app, you need a weights and bias account; it will ask for the API.
