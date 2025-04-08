@@ -17,6 +17,7 @@ from pytorch_lightning.loggers import WandbLogger
 
 # from pytorch_lightning.plugins import CheckpointIO
 # from pytorch_lightning.strategies import SingleDeviceStrategy
+from pytorch_lightning.strategies import DDPStrategy
 # import torchvision
 # import torchvision.transforms as transforms
 # import torch.nn as nn
@@ -80,6 +81,7 @@ def train_model():
     trainer = pl.Trainer(max_epochs=num_epochs,
                      callbacks=[ checkpoint_callback],
                      gradient_clip_val=grad_clip,
+                     strategy=DDPStrategy(find_unused_parameters=True),
                      accelerator=accelerator, #amp_backend="native")
                      val_check_interval=2,
                      logger=wandb_logger)
