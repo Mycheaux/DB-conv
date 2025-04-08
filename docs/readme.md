@@ -5,8 +5,11 @@ This GitHub repository contains the tool used in the paper titled `Self-supervis
 We deploy this app in 3 possible ways. 1. This GitHub (one need to set up own environment) 2. Google collab (one doesn't need to set up the environment) 3. Docker image version (one doesn't need to set up the environment). 
 
 `@echo off
+
 set "input_path=%1"
+
 set "converted_path=%input_path:/=\%"
+
 echo %converted_path%`
 
 # Solution 1: Directly run this Github repo
