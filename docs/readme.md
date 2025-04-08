@@ -44,27 +44,37 @@ We assume we already have anaconda or miniconda if not check here how to get one
      
    Now install lightening API and weights and biases
 ```
-     conda install lightning -c conda-forge
-     conda install wandb -c conda-forge
+conda install lightning -c conda-forge
+conda install wandb -c conda-forge
 ```
  
 3. In general for any CPU environment, you should first create a fresh conda environment using
-     `conda create --name myenv python=3.12 -y`
-     `conda activate myenv`
-     `conda install pip -y`
+```
+conda create --name myenv python=3.12 -y
+conda activate myenv
+conda install pip -y
+```
    and install all packages
+   
      `pip install -r requirements.txt`
+     
    This method breaks when pip can't find the right version, try the conda alternative as suggested above.
 4. In general for any devices with availavle CUDA-supported NVDIA GPU, environment you should first create a fresh conda environment using
-     `conda create --name myenv python=3.12 -y`
-     `conda activate myenv`
-     `conda install pip -y`
-     `pip install -r requirements.txt`
+```
+conda create --name myenv python=3.12 -y
+conda activate myenv
+conda install pip -y
+pip install -r requirements.txt
+```
    This method breaks when pip can't find the right version, try the conda alternative as suggested above.
 5. If you are using Mac M1 2021 try this if you encounter dependency problems in the general way. 
+
   `conda env create -f m1cpu_environment.yml`
+  
 then from activated environment
-  `pip freeze > m1cpu_requirements.txt  # From within activated environment`
+
+  `pip freeze > m1cpu_requirements.txt`  # From within activated environment
+  
   This method breaks when pip can't find the right version, try the conda alternative as suggested above.
 
 ### Weights and Biases API:
