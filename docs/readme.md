@@ -1,5 +1,5 @@
 # Bi-directional DB-converter 
-This GitHub repository contains the tool used in the paper titled `Self-supervised generative AI enables conversion of two non-overlapping cohorts`. It is a self-supervised deep learning architecture leveraging category theory designed to convert data from different cohorts with different data structures into each other. This takes input of the starting (DB1) and target data(DB2) in train, dev, and test splits, and outputs a trained model which contains weights and biases for both the forward DB-converter ($m$) and backward DB-converter ($i$). Based on the provided test set of DB1 and DB2, it also outputs $m(DB_1)$ as Converted-DB1 (which is in $DB_2$ scheme), $i(m(DB_1)$ as Reconverted-DB1, $i(DB_2)$ as Converted-DB2(which is in $DB_1$ scheme) and $m(i(DB_2)$ as reconverted DB_2. 
+This GitHub repository contains the tool used in the paper titled **Self-supervised generative AI enables conversion of two non-overlapping cohorts** - **Das. S et. al.** It is a self-supervised deep learning architecture leveraging category theory designed to convert data from different cohorts with different data structures into each other. This takes input of the starting (DB1) and target data(DB2) in train, dev, and test splits, and outputs a trained model which contains weights and biases for both the forward DB-converter ($m$) and backward DB-converter ($i$). Based on the provided test set of DB1 and DB2, it also outputs $m(DB_1)$ as Converted-DB1 (which is in $DB_2$ scheme), $i(m(DB_1)$ as Reconverted-DB1, $i(DB_2)$ as Converted-DB2(which is in $DB_1$ scheme) and $m(i(DB_2)$ as reconverted DB_2. 
 ![Fig:1](GithubFig.png)
 A. During training, the train and dev sets of two databases DB1 and DB2, are used where the goal is to convert DB1 to the DB2 scheme and vice versa. B. After trsined we take trained $m$ and $i$ to produce converted ones and also nested functions $i \circ m$ and $m \circ i $ to produce the reconverted ones, in ideal case starting dataset and reconverted should be same, as $m$ approximates functor $\mathscr{F}$ and $i$ approximated $\mathscr{G}$ which is right and left inverse of $\mathscr{F}$. C. The uni-directional DB-converter uses one neural network to approximate a functor that converts the DB1 ( here DEAS database)  into the DB2 (here SHARE) scheme. D. The bi-directional DB-converter uses two neural networks, a Forward DB-converter and a Backward DB-converter, for training without the loss approximation technique. The forward and Backward DB-converter are trained in tandem, back and forth. For C. and D. we use DEAS and SHARE as examples for two databases. 
  
@@ -25,7 +25,7 @@ echo %converted_path%
 If you prefer not to deal with Windows path quirks, you can run your repository in a Unix-like environment such as: Windows Subsystem for Linux (WSL),Git Bash.
 
 ### Python Libraries:
-We assume we already have anaconda or miniconda if not check here how to get one. https://www.anaconda.com/download or https://www.anaconda.com/docs/getting-started/miniconda/main
+We assume we already have Anaconda or miniconda; if not, check here how to get one. https://www.anaconda.com/download or https://www.anaconda.com/docs/getting-started/miniconda/main
 
 1. Best, most general way:
 ```
@@ -33,6 +33,7 @@ We assume we already have anaconda or miniconda if not check here how to get one
      conda activate myenv
      conda install pip -y
      conda install numpy scipy pandas -y
+     conda install -c conda-forge pyyaml
 ```
    Now, install either cpu or the GPU version of PyTorch
    
@@ -44,62 +45,130 @@ We assume we already have anaconda or miniconda if not check here how to get one
    
      conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia  # GPU-only
      
-   Now install lightening API and weights and biases
+   Now install the lightning API and weights and biases
 ```
 conda install lightning -c conda-forge
 conda install wandb -c conda-forge
 ```
- 
-3. In general for any CPU environment, you should first create a fresh conda environment using
+This method works in general (tested on Mac M1 2021 and in a Linux server). If it doesn't work, try the following options to make sure you have the exact versions of PyTorch, depending on the availability of CUDA devices. 
+
+2. In general, for any CPU environment, you should first create a fresh conda environment using
 ```
 conda create --name myenv python=3.12 -y
 conda activate myenv
 conda install pip -y
 ```
-   and install all packages
+and install all packages
    
-     pip install -r requirements.txt
+     pip install -r cpu_requirements.txt
      
    This method breaks when pip can't find the right version, try the conda alternative as suggested above.
-4. In general for any devices with availavle CUDA-supported NVDIA GPU, environment you should first create a fresh conda environment using
+3. In general, for any devices with available CUDA-supported NVDIA GPU, environment you should first create a fresh conda environment using
 ```
 conda create --name myenv python=3.12 -y
 conda activate myenv
 conda install pip -y
-pip install -r requirements.txt
+pip install -r gpu_requirements.txt
 ```
    This method breaks when pip can't find the right version, try the conda alternative as suggested above.
-5. If you are using Mac M1 2021 try this if you encounter dependency problems in the general way. 
+4. If you are using a Mac M1 2021, try this if you encounter dependency problems in the general way. 
 
      conda env create -f m1cpu_environment.yml
   
-then from activated environment
+Then from the activated environment
 
      pip freeze > m1cpu_requirements.txt  # From within activated environment
   
   This method breaks when pip can't find the right version, try the conda alternative as suggested above.
 
-### Weights and Biases API:
-You require a weights and bias account to monitor your Model training. Make a free account here : https://wandb.ai/site , and find your API key in your settings after logging in. When the app starts, it will ask for your API key to log in, and the App with create loss function plots during training.
+## Weights and Biases API:
+You require a weights and bias account to monitor your Model training. Make a free account here: https://wandb.ai/site , and find your API key in your settings after logging in. When the app starts, it will ask for your API key to log in, and the App with create loss function plots during training.
+
+## Configs:
+1. Data path and names of DB1's train, dev, test (referred as x_train, x_val, x_test) respectively, and DB2's train, dev, test (referred as y_train, y_val, y_test), are to be given in `data_path.yml`. Alterntively, you can also replace/create the input files in 'data/preprocessed' folder with following names `za_train.npy`,`za_val.npy`,`za_test.npy` for x_train, x_val, x_test or `zb_train.npy`,`zb_val.npy`,`zb_test.npy`for y_train, y_val, y_test. This only expects data in `.npy` format. 
+2. `config.yaml` has most commonly tuned hyperparameters and options for the output folder's name and experiment name details.
+3. `architecture.yaml` has parameters on architecture input and output size details. Make sure your data, your architecture of $m$ (referred as mapper in the code), $i$ (referred as inverter in the code), given in `scr/model.py`, and details in this config match.
+4. `advanced_config.yaml` has some more hyperparameters which are rarely changed.
+   
+## Data:
+The code expects all data in `.npy` format. If you don't have it in this format, here is how you can convert your data into `.npy` format.
+1. Read your data into pandas dataframe. e.g. `df = pd.read_csv('your_file.csv')`
+2. Convert it to `df_numpy = df.to_numpy()`.
+3. Save it using `np.save('your_file_path/your_file.npy', df_numpy)`
+The sample size of x_train, x_val, x_test should match that of y_train, y_val, y_test respectively. If not, you can preprocess them by subsampling the bigger database to the size of the smaller. e.g.
+```
+smaller_size = min(x.shape[0], y.shape[0]) # x = whole DB1, y = whole DB2
+x_subsampled = x_train[:smaller_size]
+y_subsampled = y_train[:smaller_size]
+```
+The feature size of x_train, x_val, and x_test should be the same with each other (all coming from the same database DB1). The feature size of y_train, y_val, and y_test should be the same as each other (all coming from the same database DB2). 
+Here is an example to split the data in train dev and test set if your data is not already split. 
+```
+import numpy as np
+
+# Assuming x and y are NumPy arrays
+x = np.load('path_to_x.npy')  # Replace with your actual file path
+y = np.load('path_to_y.npy')  # Replace with your actual file path
+
+# Ensure x and y have the same sample size
+assert x.shape[0] == y.shape[0], "x and y must have the same number of samples!"
+
+# Shuffle the data (optional, but recommended)
+indices = np.arange(x.shape[0])
+np.random.shuffle(indices)
+x = x[indices]
+y = y[indices]
+
+# Split the data into 90% train, 10% dev, 10% test
+train_size = int(0.9 * len(x))
+dev_size = int(0.1 * len(x))
+
+x_train, x_dev, x_test = x[:train_size], x[train_size:train_size+dev_size], x[train_size+dev_size:]
+y_train, y_dev, y_test = y[:train_size], y[train_size:train_size+dev_size], y[train_size+dev_size:]
+
+# Save the datasets
+np.save('x_train.npy', x_train)
+np.save('x_dev.npy', x_dev)
+np.save('x_test.npy', x_test)
+np.save('y_train.npy', y_train)
+np.save('y_dev.npy', y_dev)
+np.save('y_test.npy', y_test)
+
+print("Data successfully split into train, dev, and test sets!")
+
+```
+## architecture:
+Based on input output size and datatype in each senario you would need to design your own forward DB-converter / mapper / $m$ and backward DB-converter / interter / $i$. These two architecture should be in `src/model.py` with samr class name, written with pytorch lightening's `pl.LightningModule`. Do you want to convert your pytorch code to lightning api? check here : [https://lightning.ai/docs/fabric/2.4.0/#](https://lightning.ai/docs/pytorch/stable/starter/introduction.html) , https://lightning.ai/blog/pytorch-lightning-upgrade-faq/
+Have  tensorflow code and want to convert into pytorch? You can find many AI-based code converters to move from tensorflow to pytorch. 
+
+### architecture wisdom:
+Use the exact reverse architecture of $m$ for $i$. 
+If training suggests one is more stronger than the other, you may try regularization, or you may train one agent more times than the other, change it in 'config.yaml' at `mapper_repeat`,`inverter_repeat` for $m$ and $i$ respectively. In each epoch $m$ runs `mapper_repeat` times and $i$ runs `inverter_repeat` times. 
+
+### hyperparameter tuning wisdom:
+Check the plots and change the loss component weightage.
+$m$ and $i$ should converge ideally at a similar speed. Otherwise, one is more powerful than the other. 
+batch_size: A bigger batch size helps, but on GPU it might be limited by VRAM.
 
 
+## Run App:
+In the terminal, within activated environment where all necessary libraries (yalm, numpy, scipy, pandas, pytorch, lightning, wandb ) are installed, run the following 
+`python3 main.py`
+
+It will ask for a wandb API, paste your api, and hit enter. 
+
+## Monitor the training progress:
+Log in to your weights and bias account, go to the project tab, and you will find a project named the same as the name you provided in `config.yaml` at `project_name`. This will have all the plots being plotted in real time as your model gets being trained, each model will be named the same as  the name you provided in `config.yaml` at `model_name`. During training, each $n$ epochs (as defined in `config.yaml`), it will save the models in `output/models/project_name/model_name`.
+
+## Model inference / Converted and reconverted data generation:
+It will automatically load the model and epoch you specify in the `config.yaml`, and produce the results and save them in the path specified in `config.yaml`, which is by default in `output/data`. 
+ $m(DB_1)$ as Converted-DB1 (which is in $DB_2$ scheme) := DB-A_converted.npy
+ $i(m(DB_1)$ as Reconverted-DB1 := DB-A_reconverted.npy
+ $i(DB_2)$ as Converted-DB2(which is in $DB_1$ scheme) := DB-B_converted.npy
+ $m(i(DB_2)$ as reconverted DB_2  := DB-B_reconverted.npy
+
+## Notes:
+Currently, the `requirement.txt` is ignored; you can reactivate it from `main.py`. This slows down the process. Hence it better to install them separately during firs set up. 
 
 
-
-
-### It uses two NN architectures trained in tandem
-
-To run the app, you need a weights and bias account; it will ask for the API.
-
-Currently, the `requirement.txt` is ignored; you can reactivate it from `main.py`.
-
-Please install the correct version of pytorch depending on the availability of CUDA devices/ change the `requirement.txt` accordingly.
-
-You can use existing folders for input data and output model, or you can use a different location, change the path in `config/data_path.yaml`
-
-Most hyperparameters that are of interest to be tuned for most tasks can be found in `config/congif.yaml` and `config/architecture.yaml`
-
-Other hyperparameters are in `config/advanced_config.yaml`
-
-The user can define their own mapper (forward DB- converter) and inverter (backward DB- converter) by replacing the model.py or changing 2nd line of `db-converter.py` file
 
