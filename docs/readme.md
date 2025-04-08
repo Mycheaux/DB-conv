@@ -1,5 +1,6 @@
 # Bi-directional DB-converter 
 This GitHub repository contains the tool used in the paper titled `Self-supervised generative AI enables conversion of two non-overlapping cohorts`. It is a self-supervised deep learning architecture leveraging category theory designed to convert data from different cohorts with different data structures into each other. This takes input of the starting (DB1) and target data(DB2) in train, dev, and test splits, and outputs a trained model which contains weights and biases for both the forward DB-converter ($m$) and backward DB-converter ($i$). Based on the provided test set of DB1 and DB2, it also outputs $m(DB_1)$ as Converted-DB1 (which is in $DB_2$ scheme), $i(m(DB_1)$ as Reconverted-DB1, $i(DB_2)$ as Converted-DB2(which is in $DB_1$ scheme) and $m(i(DB_2)$ as reconverted DB_2. 
+![Alt Text](GithubFig.png)
 
 # How to use DB-converter
 We deploy this app in 3 possible ways. 1. This GitHub (one need to set up own environment) 2. Google collab (one doesn't need to set up the environment) 3. Docker image version (one doesn't need to set up the environment). 
@@ -36,11 +37,11 @@ We assume we already have anaconda or miniconda if not check here how to get one
    
    CPU version:
    
-      `conda install pytorch=2.3 torchvision torchaudio cpuonly -c pytorch`  # CPU-only
+     conda install pytorch=2.3 torchvision torchaudio cpuonly -c pytorch  # CPU-only
    
    GPU version:
    
-     `conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia`  # GPU-only
+     conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia  # GPU-only
      
    Now install lightening API and weights and biases
 ```
@@ -56,7 +57,7 @@ conda install pip -y
 ```
    and install all packages
    
-     `pip install -r requirements.txt`
+     pip install -r requirements.txt
      
    This method breaks when pip can't find the right version, try the conda alternative as suggested above.
 4. In general for any devices with availavle CUDA-supported NVDIA GPU, environment you should first create a fresh conda environment using
@@ -69,11 +70,11 @@ pip install -r requirements.txt
    This method breaks when pip can't find the right version, try the conda alternative as suggested above.
 5. If you are using Mac M1 2021 try this if you encounter dependency problems in the general way. 
 
-  `conda env create -f m1cpu_environment.yml`
+     conda env create -f m1cpu_environment.yml
   
 then from activated environment
 
-  `pip freeze > m1cpu_requirements.txt`  # From within activated environment
+     pip freeze > m1cpu_requirements.txt  # From within activated environment
   
   This method breaks when pip can't find the right version, try the conda alternative as suggested above.
 
