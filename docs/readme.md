@@ -11,15 +11,13 @@ We deploy this app in 3 possible ways. 1. This GitHub (one need to set up own en
 ## Environment Set up:
 We currently provide both CPU and GPU (NVIDIA) support. The app is tested on a Mac M1 CPU environment.
 It should run fine in a Linux environment without necessary changes. If you are on Windows and find errors due to the path due to `/` vs \' you may try the following fix:You can create a batch script that automatically translates paths with / into \ before passing them to tools that require backslashes. For example:
-`
+``
 @echo off
 
 set "input_path=%1"
-
 set "converted_path=%input_path:/=\%"
-
 echo %converted_path%
-`
+``
 ### Python Libraries:
 
 
