@@ -65,7 +65,9 @@ and install all packages
      pip install -r cpu_requirements.txt
      
    This method breaks when pip can't find the right version, try the conda alternative as suggested above.
+   
 3. In general, for any devices with available CUDA-supported NVDIA GPU, environment you should first create a fresh conda environment using
+
 ```
 conda create --name myenv python=3.12 -y
 conda activate myenv
@@ -73,6 +75,7 @@ conda install pip -y
 pip install -r gpu_requirements.txt
 ```
    This method breaks when pip can't find the right version, try the conda alternative as suggested above.
+
 4. If you are using a Mac M1 2021, try this if you encounter dependency problems in the general way. 
 
      conda env create -f m1cpu_environment.yml
