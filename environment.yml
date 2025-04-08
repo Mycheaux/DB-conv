@@ -1,0 +1,8 @@
+name: dl3
+channels:
+  - defaults
+dependencies:
+  - lightning
+  - wandb
+  - numpy=2.0.2
+prefix: /Users/supratim/opt/anaconda3/envs/dl3

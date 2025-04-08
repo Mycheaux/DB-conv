@@ -1,6 +1,6 @@
 grad_clip : 0.0
-dropout_rate : 0.0
-num_epochs : 50 # trty 5000
+dropout_rate : 0.3
+num_epochs : 50 # trt 5000
 batch_size : 24
 l1_lamb : 1
 l2_lamb : 1
