@@ -4,13 +4,7 @@ This GitHub repository contains the tool used in the paper titled `Self-supervis
 # How to use DB-converter
 We deploy this app in 3 possible ways. 1. This GitHub (one need to set up own environment) 2. Google collab (one doesn't need to set up the environment) 3. Docker image version (one doesn't need to set up the environment). 
 
-`@echo off
 
-set "input_path=%1"
-
-set "converted_path=%input_path:/=\%"
-
-echo %converted_path%`
 
 # Solution 1: Directly run this Github repo
 
@@ -19,8 +13,11 @@ We currently provide both CPU and GPU (NVIDIA) support. The app is tested on a M
 It should run fine in a Linux environment without necessary changes. If you are on Windows and find errors due to the path due to `/` vs \' you may try the following fix:You can create a batch script that automatically translates paths with / into \ before passing them to tools that require backslashes. For example:
 `
 @echo off
+
 set "input_path=%1"
+
 set "converted_path=%input_path:/=\%"
+
 echo %converted_path%
 `
 ### Python Libraries:
