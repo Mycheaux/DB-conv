@@ -25,16 +25,20 @@ If you prefer not to deal with Windows path quirks, you can run your repository 
 ### Python Libraries:
 We assume we already have anaconda or miniconda if not check here how to get one. https://www.anaconda.com/download or https://www.anaconda.com/docs/getting-started/miniconda/main
 
-1. Best, most general way: 
-     `conda create --name myenv python=3.12 -y`
-     `conda activate myenv`
-     `conda install pip -y`
-     `conda install numpy scipy pandas -y `
+1. Best, most general way:
+```
+     conda create --name myenv python=3.12 -y
+     conda activate myenv
+     conda install pip -y
+     conda install numpy scipy pandas -y
+```
    Now, install either cpu or the GPU version of PyTorch
    CPU version:
-   `conda install pytorch=2.3 torchvision torchaudio cpuonly -c pytorch`  # CPU-only
+   ``conda install pytorch=2.3 torchvision torchaudio cpuonly -c pytorch``  # CPU-only
    GPU version:
+   
      `conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia`  # GPU-only
+     
    Now install lightening API and weights and biases
      `conda install lightning -c conda-forge`
      `conda install wandb -c conda-forge`
