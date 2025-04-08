@@ -164,10 +164,10 @@ Log in to your weights and bias account, go to the project tab, and you will fin
 
 ## Model inference / Converted and reconverted data generation:
 It will automatically load the model and epoch you specify in the `config.yaml`, and produce the results and save them in the path specified in `config.yaml`, which is by default in `output/data`. 
- $m(DB_1)$ as Converted-DB1 (which is in $DB_2$ scheme) := DB-A_converted.npy
- $i(m(DB_1)$ as Reconverted-DB1 := DB-A_reconverted.npy
- $i(DB_2)$ as Converted-DB2(which is in $DB_1$ scheme) := DB-B_converted.npy
- $m(i(DB_2)$ as reconverted DB_2  := DB-B_reconverted.npy
+ $m(DB_1)$ as Converted-DB1 (which is in $DB_2$ scheme) := `DB-A_converted.npy`
+ $i(m(DB_1)$ as Reconverted-DB1 := `DB-A_reconverted.npy`
+ $i(DB_2)$ as Converted-DB2(which is in $DB_1$ scheme) := `DB-B_converted.npy`
+ $m(i(DB_2)$ as reconverted DB_2  := `DB-B_reconverted.npy`
 
 ## Notes:
 Currently, the `requirement.txt` is ignored; you can reactivate it from `main.py`. This slows down the process. Hence it better to install them separately during firs set up. 
