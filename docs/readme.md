@@ -39,11 +39,11 @@ We assume we already have Anaconda or miniconda; if not, check here how to get o
    
    CPU version:
    
-     conda install pytorch=2.3 torchvision torchaudio cpuonly -c pytorch  # CPU-only
+     conda install pytorch=2.5.1 torchvision torchaudio cpuonly -c pytorch  # CPU-only
    
    GPU version:
    
-     conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia  # GPU-only
+     conda install pytorch==2.6.0 torchvision torchaudio pytorch-cuda=12.4 -c pytorch -c nvidia  # GPU-only
      
    Now install the lightning API and weights and biases
 ```
