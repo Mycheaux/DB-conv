@@ -11,14 +11,57 @@ We deploy this app in 3 possible ways. 1. This GitHub (one need to set up own en
 ## Environment Set up:
 We currently provide both CPU and GPU (NVIDIA) support. The app is tested on a Mac M1 CPU environment.
 It should run fine in a Linux environment without necessary changes. If you are on Windows and find errors due to the path due to `/` vs \' you may try the following fix:You can create a batch script that automatically translates paths with / into \ before passing them to tools that require backslashes. For example:
-``
-@echo off
+`@echo off
 
 set "input_path=%1"
+
 set "converted_path=%input_path:/=\%"
-echo %converted_path%
-``
+
+echo %converted_path% `
+If you prefer not to deal with Windows path quirks, you can run your repository in a Unix-like environment such as: Windows Subsystem for Linux (WSL),Git Bash.
+
 ### Python Libraries:
+We assume we already have anaconda or miniconda if not check here how to get one. https://www.anaconda.com/download or https://www.anaconda.com/docs/getting-started/miniconda/main
+
+1. Best, most general way: 
+     `conda create --name myenv python=3.12 -y`
+     `conda activate myenv`
+     `conda install pip -y`
+     `conda install numpy scipy pandas -y `
+   Now, install either cpu or the GPU version of PyTorch
+   CPU version:
+   `conda install pytorch=2.3 torchvision torchaudio cpuonly -c pytorch`  # CPU-only
+   GPU version:
+     `conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia`  # GPU-only
+   Now install lightening API and weights and biases
+     `conda install lightning -c conda-forge`
+     `conda install wandb -c conda-forge`
+ 
+3. In general for any CPU environment, you should first create a fresh conda environment using
+     `conda create --name myenv python=3.12 -y`
+     `conda activate myenv`
+     `conda install pip -y`
+   and install all packages
+     `pip install -r requirements.txt`
+   This method breaks when pip can't find the right version, try the conda alternative as suggested above.
+4. In general for any devices with availavle CUDA-supported NVDIA GPU, environment you should first create a fresh conda environment using
+     `conda create --name myenv python=3.12 -y`
+     `conda activate myenv`
+     `conda install pip -y`
+     `pip install -r requirements.txt`
+   This method breaks when pip can't find the right version, try the conda alternative as suggested above.
+5. If you are using Mac M1 2021 try this if you encounter dependency problems in the general way. 
+  `conda env create -f m1cpu_environment.yml`
+then from activated environment
+  `pip freeze > m1cpu_requirements.txt  # From within activated environment`
+  This method breaks when pip can't find the right version, try the conda alternative as suggested above.
+
+### Weights and Biases API:
+You require a weights and bias account to monitor your Model training. Make a free account here : https://wandb.ai/site , and find your API key in your settings after logging in. When the app starts, it will ask for your API key to log in, and the App with create loss function plots during training.
+
+
+
+
 
 
 ### It uses two NN architectures trained in tandem
