@@ -9,6 +9,8 @@ We deploy this app in 3 possible ways. 1. This GitHub (one need to set up own en
 
 
 # Solution 1: Directly run this Github repo
+## Clone Repo
+`git clone https://github.com/Mycheaux/DB-conv.git`
 
 ## Environment Set up:
 We currently provide both CPU and GPU (NVIDIA) support. The app is tested on a Mac M1 CPU environment.
