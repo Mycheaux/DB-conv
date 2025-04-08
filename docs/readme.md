@@ -33,19 +33,20 @@ We assume we already have anaconda or miniconda if not check here how to get one
      conda install numpy scipy pandas -y
 ```
    Now, install either cpu or the GPU version of PyTorch
+   
    CPU version:
    
-   `conda install pytorch=2.3 torchvision torchaudio cpuonly -c pytorch`  # CPU-only
+      `conda install pytorch=2.3 torchvision torchaudio cpuonly -c pytorch`  # CPU-only
    
    GPU version:
    
      `conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia`  # GPU-only
      
    Now install lightening API and weights and biases
-   ```
+     ```
      conda install lightning -c conda-forge
      conda install wandb -c conda-forge
-```
+     ```
  
 3. In general for any CPU environment, you should first create a fresh conda environment using
      `conda create --name myenv python=3.12 -y`
