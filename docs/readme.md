@@ -176,11 +176,18 @@ It will automatically load the model and epoch you specify in the `config.yaml`,
 Currently, the `requirement.txt` is ignored; you can reactivate it from `main.py`. This slows down the process. Hence it better to install them separately during firs set up. 
 
 # Solution 2: Run on google collab:
-To run in google collab please go to `ipynb_notebooks/KT_2agent_syn_cont.ipynb`, download the file. Then go to https://colab.research.google.com/ and sign in, go to `file` $longrightarrow$ `upload notebook`. Now after uploading run each cells one by one. To utilize the GPU connect with a GPU run time. Here you will also need Weights and Biases API (see above). KT_2agent_syn_cont.ipynb gerenates synthetic ddata and perfoms experiment in them . However for you use case, check the `Data` section above to import your data in `.npy` format. 
+To run in google collab please go to `ipynb_notebooks/KT_2agent_syn_cont.ipynb`, download the file.
+
+Then go to https://colab.research.google.com/ and sign in, go to `file` $longrightarrow$ `upload notebook`.
+
+Now after uploading run each cells one by one. 
+
+To utilize the GPU connect with a GPU run time. Here you will also need Weights and Biases API (see above). KT_2agent_syn_cont.ipynb gerenates synthetic ddata and perfoms experiment in them . However for you use case, check the `Data` section above to import your data in `.npy` format. 
 
 
 # Solution 3: via Docker : 
 **further testing is required**
+
 Get the docker image using this `docker pull mycheaux/db-converter`.
 
 Get the image runing `docker run -it db-converter`
