@@ -187,13 +187,62 @@ To utilize the GPU connect with a GPU run time. Here you will also need Weights 
 # Solution 3: via Docker : 
 **further testing is required**
 
-Get the docker image using this `docker pull mycheaux/db-converter`.
+## Docker only
 
-Get the image runing `docker run -it db-converter`
+Get the docker image using this `docker pull mycheaux/db-converter:1.0`.
 
-Here you will also need Weights and Biases API (see above).
+Get the image runing `docker run -it db-converter`.
+
+You can specify config, input, and output volumes as follows and provide the required files as demonstrated in this repository:
+
+```
+docker run -v ./config:/app/config -v ./output:/app/output -v ./data:/app/ data db-converter
+```
+
+To support the use of CUDA inside Docker you will first need to set up the Nvidia container toolkit as described [here](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html).
+
+After that, docker can be run with cuda support as follows:
+
+```
+docker run -v ./config:/app/config -v ./output:/app/output -v ./data:/app/data --runtime=nvidia --gpus all db-converter
+
+```
+
+## Docker compose
+
+For the ease of use we further provide a `docker-compose.yml` in this repository. You can either copy it to your local system or just clone the whole repository, as described earlier. CUDA support is enabled by default, so make sure you prepared your execution system as described in the Docker only block above, or remove everyting including and after the `deploy:` key in the docker-compose file.
+
+To adjust config, input, and output directory you can edit the left side of the volume declaration in the docker-compose file:
+
+```yaml
+volumes:
+  - $config_directory:/app/config
+  - $output_directory:/app/output
+  - $data_directory:/app/data
+```
+
+NOTE: Do not adjust the directories using the config files, as that will create a missmatch with where the docker-compose volumes will be mounted to!
 
 
+If you want to use Weights & Biases to monitor the training progress and do want to provide the API key through the adequate config file you will have to launch the docker container in interactive mode:
+
+```bash
+docker compose run --rm db-conv
+```
+
+Otherwise, if you either specify your API key through the config file or do not want to connect to Weights & Biases at all you can simply one of the following commands:
+
+
+To run in the background:
+```bash
+docker compose up -d
+```
+
+
+To run in attached mode:
+```bash
+docker compose up
+```
 
 
 
