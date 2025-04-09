@@ -161,9 +161,12 @@ The total loss of $m$ is called `mapping_loss` and the total loss of $i$ is call
 batch_size: A bigger batch size helps, but on GPU it might be limited by VRAM.
 
 
-## Run App:
-In the terminal, within activated environment where all necessary libraries (yalm, numpy, scipy, pandas, pytorch, lightning, wandb ) are installed, run the following 
+## Run Training and Inference:
+**For training follwed by inference**, in the terminal, within activated environment where all necessary libraries (yalm, numpy, scipy, pandas, pytorch, lightning, wandb ) are installed, run the following 
 `python3 main.py`
+
+**For inference alone**, after you have alteast once run the training or have preexisting model checkpoints, run the follwing
+`python3 inference.py`
 
 It will ask for a wandb API, paste your api, and hit enter. 
 
