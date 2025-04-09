@@ -25,17 +25,21 @@ import torch.cuda as cuda
 from torch.utils.data import TensorDataset, Dataset, DataLoader
 # from torch.utils.tensorboard import SummaryWriter
 # from torchsummary import summary
-
-
+def load_data(file_path):
+    """Load data from .npy or .csv files into NumPy array"""
+    if str(file_path).endswith('.npy'):
+        return np.load(file_path)
+    elif str(file_path).endswith('.csv'):
+        return np.loadtxt(file_path, delimiter=',', skiprows=1)
+    else:
+        raise ValueError("Unsupported input file extension. Use .npy or .csv")
 
 def load_test_data(x_test_path, y_test_path, batch_size):
-    # x_train = np.load(str(x_train_path))
-    # x_val = np.load(str(x_val_path))
-    x_test = np.load(str(x_test_path))
 
-    # y_train= np.load(str(y_train_path))
-    # y_val = np.load(str(y_val_path))
-    y_test = np.load(str(y_test_path))
+    x_test = load_data(str(x_test_path))
+
+
+    y_test = load_data(str(y_test_path))
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     # x_train_tt = torch.tensor(x_train,dtype=torch.float)#.unsqueeze(1)

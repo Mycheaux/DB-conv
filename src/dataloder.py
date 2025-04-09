@@ -38,13 +38,24 @@ y_test_path = data_path + '/'+ data_path_yaml.get('y_test','zb_test.npy')
 config = read_config('config/config.yaml')
 batch_size = config.get('batch_size', 24)
 
-x_train = np.load(str(x_train_path))
-x_val = np.load(str(x_val_path))
-x_test = np.load(str(x_test_path))
+def load_data(file_path):
+    """Load data from .npy or .csv files into NumPy array"""
+    if str(file_path).endswith('.npy'):
+        return np.load(file_path)
+    elif str(file_path).endswith('.csv'):
+        return np.loadtxt(file_path, delimiter=',', skiprows=1)
+    else:
+        raise ValueError("Unsupported input file extension. Use .npy or .csv")
 
-y_train= np.load(str(y_train_path))
-y_val = np.load(str(y_val_path))
-y_test = np.load(str(y_test_path))
+
+
+x_train = load_data(str(x_train_path))
+x_val = load_data(str(x_val_path))
+x_test = load_data(str(x_test_path))
+
+y_train= load_data(str(y_train_path))
+y_val = load_data(str(y_val_path))
+y_test = load_data(str(y_test_path))
 
 # print(x_train.shape, y_train.shape)
 # print(x_val.shape, y_val.shape)
