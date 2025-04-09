@@ -45,7 +45,7 @@ conda install -c conda-forge pyyaml
    
    GPU version:
    
-     conda install pytorch==2.6.0 torchvision torchaudio pytorch-cuda=12.4 -c pytorch -c nvidia  # GPU-only
+     pip3 install torch==2.6.0  # GPU-only #conda is removed
      
    Now install the lightning API and weights and biases
 ```
