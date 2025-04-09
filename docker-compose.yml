@@ -1,0 +1,16 @@
+services:
+  db-conv:
+    image: mycheaux/db-converter:1.0
+    container_name: db_converter
+    volumes:
+      - ./config:/app/config
+      - ./output:/app/output
+      - ./data:/app/data
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ['all']
+              capabilities: [gpu]
+
