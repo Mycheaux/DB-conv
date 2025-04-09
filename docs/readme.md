@@ -30,8 +30,8 @@ We assume we already have Anaconda or miniconda; if not, check here how to get o
 
 1. Best, most general way:
 ```
-conda create --name myenv python=3.12 -y
-conda activate myenv
+conda create --name db-conv python=3.12 -y
+conda activate db-conv
 conda install pip -y
 conda install numpy scipy pandas -y
 conda install -c conda-forge pyyaml
@@ -55,8 +55,8 @@ This method works in general (tested on Mac M1 2021 and in a Linux server). If i
 
 2. In general, for any CPU environment, you should first create a fresh conda environment using
 ```
-conda create --name myenv python=3.12 -y
-conda activate myenv
+conda create --name db-conv python=3.12 -y
+conda activate db-conv
 conda install pip -y
 ```
 and install all packages
@@ -68,8 +68,8 @@ and install all packages
 3. In general, for any devices with available CUDA-supported NVDIA GPU, environment you should first create a fresh conda environment using
 
 ```
-conda create --name myenv python=3.12 -y
-conda activate myenv
+conda create --name db-conv python=3.12 -y
+conda activate db-conv
 conda install pip -y
 pip install -r gpu_requirements.txt
 ```
