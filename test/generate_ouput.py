@@ -49,6 +49,9 @@ def run_test():
     np.save(str(output_data_path + "/" + load_project_name + "/" + load_model_name+ "/" + load_epoch_name+ "/" + "DB-A_converted.npy"), y_hat_test)
     np.save(str(output_data_path + "/" + load_project_name + "/" + load_model_name+ "/" + load_epoch_name+ "/" + "DB-A_reconverted.npy"), y_hat_hat_test)
     
+    np.savetxt(str(output_data_path + "/" + load_project_name + "/" + load_model_name+ "/" + load_epoch_name+ "/" + "DB-A_converted.csv"), y_hat_test, delimiter=',', fmt='%d')
+    np.savetxt(str(output_data_path + "/" + load_project_name + "/" + load_model_name+ "/" + load_epoch_name+ "/" + "DB-A_reconverted.csv"), y_hat_hat_test, delimiter=',', fmt='%d')
+    
     # Inverter outputs
     x_hat_test = i(y_test_tt).detach().cpu().numpy()
     x_hat_hat_test = m(i(y_test_tt)).detach().cpu().numpy()
@@ -56,4 +59,8 @@ def run_test():
     np.save(str(output_data_path + "/" + load_project_name + "/" + load_model_name+ "/" + load_epoch_name+ "/" + "DB-B_converted.npy"), x_hat_test)
     np.save(str(output_data_path + "/" + load_project_name + "/" + load_model_name+ "/" + load_epoch_name+ "/" + "DB-B_reconverted.npy"), x_hat_hat_test)
     
+    np.savetxt(str(output_data_path + "/" + load_project_name + "/" + load_model_name+ "/" + load_epoch_name+ "/" + "DB-B_converted.csv"), x_hat_test, delimiter=',', fmt='%d')
+    np.savetxt(str(output_data_path + "/" + load_project_name + "/" + load_model_name+ "/" + load_epoch_name+ "/" + "DB-B_reconverted.csv"), x_hat_hat_test, delimiter=',', fmt='%d')
+    
     print ('Files are saved to output/<porject_name>/<model_name>/<epoch_name>')
+    print ("saved in both npy and csv format")
