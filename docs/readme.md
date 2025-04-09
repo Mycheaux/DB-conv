@@ -189,7 +189,7 @@ Currently, the `requirement.txt` is ignored; you can reactivate it from `main.py
 # Solution 2: Run on Google Colab:
 To run in Google Colab, please go to `ipynb_notebooks/ipynb_notebooks.zip`, download the zip file and unzip it, and find the `KT_2agent_syn_cont.ipynb` file.
 
-Then go to https://colab.research.google.com/ and sign in, go to `file` $rightarrow$ `upload notebook`, and upload the aforementioned file.
+Then go to https://colab.research.google.com/ and sign in, go to `file` $\rightarrow$ `upload notebook`, and upload the aforementioned file.
 
 Now, after uploading, run each cell one by one. 
 
