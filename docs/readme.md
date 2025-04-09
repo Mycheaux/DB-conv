@@ -1,10 +1,27 @@
 # Bi-directional DB-converter 
-This GitHub repository contains the tool used in the paper titled **Self-supervised generative AI enables conversion of two non-overlapping cohorts** - **Das, S. et. al.** It is a self-supervised deep learning architecture leveraging category theory designed to convert data from different cohorts with different data structures into each other. This takes input of the starting (DB1) and target data(DB2) in train, dev, and test splits, and outputs a trained model which contains weights and biases for both the forward DB-converter ($m$) and backward DB-converter ($i$). Based on the provided test set of DB1 and DB2, it also outputs $m(DB_1)$ as Converted-DB1 (which is in $DB_2$ scheme), $i(m(DB_1)$ as Reconverted-DB1, $i(DB_2)$ as Converted-DB2(which is in $DB_1$ scheme) and $m(i(DB_2)$ as reconverted DB_2. 
+This GitHub repository contains the tool described in the paper titled Self-Supervised Generative AI Enables Conversion of Two Non-Overlapping Cohorts by Das, S. et al. The tool implements a self-supervised deep learning architecture leveraging category theory to convert data between two cohorts with distinct data structures.
+
+**Functionality**
+The system takes inputs of source (DB1) and target (DB2) data in `train`, `dev`, and `test` splits, and outputs a trained model containing weights and biases for both:
+
+Forward DB-converter ($m$)
+
+Backward DB-converter ($i$)
+
+After training, the model processes test sets to generate:
+
+**Converted-DB1** $(m(DB_1))$ in DB2 schema
+
+**Reconverted-DB1** $(i(m(DB_1)))$
+
+**Converted-DB2** $(i(DB_2))$ in DB1 schema
+
+**Reconverted-DB2** $(m(i(DB_2)))$
 ![Fig:1](GithubFig.png)
 A. During training, the train and dev sets of two databases, DB1 and DB2, are use,d where the goal is to convert DB1 to the DB2 scheme and vice versa. B. After trsined we take trained $m$ and $i$ to produce converted ones and also nested functions $i \circ m$ and $m \circ i$ to produce the reconverted ones, in ideal case starting dataset and reconverted should be same, as $m$ approximates functor $\mathscr{F}$ and $i$ approximated $\mathscr{G}$ which is right and left inverse of $\mathscr{F}$. C. The uni-directional DB-converter uses one neural network to approximate a functor that converts the DB1 ( here DEAS database)  into the DB2 (here SHARE) scheme. D. The bi-directional DB-converter uses two neural networks, a Forward DB-converter and a Backward DB-converter, for training without the loss approximation technique. The forward and Backward DB-converter are trained in tandem, back and forth. For C. and D., we use DEAS and SHARE as examples for two databases. 
  
 # How to use DB-converter
-We deploy this app in 3 possible ways. 1. This GitHub (one needs to set up one's own environment) 2. Google collab (one doesn't need to set up the environment) 3. Docker image version (one doesn't need to set up the environment). 
+We deploy this app in 3 possible ways. **1.** **GitHub** (one needs to set up one's own environment) ` **Google Colab** (one doesn't need to set up the environment) **3.** **Docker image**  (one doesn't need to set up the environment). 
 
 # Clone Repo
 `git clone https://github.com/Mycheaux/DB-conv.git`
@@ -12,8 +29,8 @@ We deploy this app in 3 possible ways. 1. This GitHub (one needs to set up one's
 # Solution 1: Directly run this Github repo
 
 ## Environment Set up:
-We currently provide both CPU and GPU (NVIDIA) support. The app is tested on a Mac M1 CPU environment and Linux GPU cluster.
-If you are on Windows and find errors due to the path due to `/` vs \' you may try the following fix:You can create a batch script that automatically translates paths with / into \ before passing them to tools that require backslashes. For example:
+We currently provide both CPU and GPU (NVIDIA) support. The app is tested on a Mac M1 CPU environment and a Linux GPU cluster.
+If you are on Windows and find errors due to the path due to `/` vs \', you may try the following fix: You can create a batch script that automatically translates paths with / into \ before passing them to tools that require backslashes. For example:
 ```
 @echo off
 
