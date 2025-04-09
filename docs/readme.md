@@ -6,15 +6,14 @@ A. During training, the train and dev sets of two databases DB1 and DB2, are use
 # How to use DB-converter
 We deploy this app in 3 possible ways. 1. This GitHub (one need to set up own environment) 2. Google collab (one doesn't need to set up the environment) 3. Docker image version (one doesn't need to set up the environment). 
 
-
-
-# Solution 1: Directly run this Github repo
-## Clone Repo
+# Clone Repo
 `git clone https://github.com/Mycheaux/DB-conv.git`
 
+# Solution 1: Directly run this Github repo
+
 ## Environment Set up:
-We currently provide both CPU and GPU (NVIDIA) support. The app is tested on a Mac M1 CPU environment.
-It should run fine in a Linux environment without necessary changes. If you are on Windows and find errors due to the path due to `/` vs \' you may try the following fix:You can create a batch script that automatically translates paths with / into \ before passing them to tools that require backslashes. For example:
+We currently provide both CPU and GPU (NVIDIA) support. The app is tested on a Mac M1 CPU environment and Linux GPU cluster.
+If you are on Windows and find errors due to the path due to `/` vs \' you may try the following fix:You can create a batch script that automatically translates paths with / into \ before passing them to tools that require backslashes. For example:
 ```
 @echo off
 
