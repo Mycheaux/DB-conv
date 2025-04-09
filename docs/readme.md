@@ -106,9 +106,12 @@ Then from the activated environment
 You require a weights and bias account to monitor your Model training. Make a free account here: https://wandb.ai/site, and find your API key in your settings after logging in. When the app starts, it will ask for your API key to log in, and the App with create loss function plots during training.
 
 ## Configs:
-1. Data path and names of DB1's train, dev, test (referred as x_train, x_val, x_test) respectively, and DB2's train, dev, test (referred as y_train, y_val, y_test), are to be given in `data_path.yml`. Alterntively, you can also replace/create the input files in 'data/preprocessed' folder with following names `za_train.npy`,`za_val.npy`,`za_test.npy` for x_train, x_val, x_test or `zb_train.npy`,`zb_val.npy`,`zb_test.npy`for y_train, y_val, y_test. This only expects data in `.npy` format. 
-2. `config.yaml` has most commonly tuned hyperparameters and options for the output folder's name and experiment name details.
-3. `architecture.yaml` has parameters on architecture input and output size details. Make sure your data, your architecture of $m$ (referred as mapper in the code), $i$ (referred as inverter in the code), given in `scr/model.py`, and details in this config match.
+1. Data path and names of DB1's train, dev, test (referred as x_train, x_val, x_test) respectively, and DB2's train, dev, test (referred as y_train, y_val, y_test), are to be given in `data_path.yml`. Alterntively, you can also replace/create the input files in 'data/preprocessed' folder with following names `za_train.npy`,`za_val.npy`,`za_test.npy` for x_train, x_val, x_test or `zb_train.npy`,`zb_val.npy`,`zb_test.npy`for y_train, y_val, y_test. This only expects data in `.npy` format.
+  
+2. `config.yaml` has most commonly tuned hyperparameters and options for the output folder's name and experiment name details. For testing the app, the total number of epochs `num_epochs` is set to a low number, but for real training, the value was $5000$ and the frequency of saving the model is also set to a low usually it is kept at $100$.
+
+3. `architecture.yaml` has parameters on architecture input and output size details. Make sure your data, your architecture of $m$ (referred to as mapper in the code), $i$ (referred to as inverter in the code), given in `scr/model.py`, and details in this config match.
+  
 4. `advanced_config.yaml` has some more hyperparameters which are rarely changed.
    
 ## Data:
@@ -171,7 +174,7 @@ If training suggests one is stronger than the other, you may try regularization,
 
 ### hyperparameter tuning wisdom:
 Check the plots and change the loss component weightage.
-$m$/ forward DB-converter / `mapper` and $i$ /backward DB-converter / `inverter` should converge ideally at a similar speed. Otherwise, one is more powerful than the other. 
+$m$/ forward DB-converter / `mapper` and $i$ / backward DB-converter / `inverter` should converge ideally at a similar speed. Otherwise, one is more powerful than the other. 
 The total loss of $m$ is called `mapping_loss` and the total loss of $i$ is called `inverting_loss`. Here are the components of the loss. 
 `l1_loss` = $L_1$ distance
 `l2_loss` = $L_2$ distance
@@ -218,9 +221,9 @@ To utilize the GPU, connect with a GPU runtime. Here you will also need Weights 
 
 ## Docker only
 
-Get the docker image using this `docker pull mycheaux/db-converter:1.0`.
+Get the Docker image using this `docker pull mycheaux/db-converter:1.0`.
 
-Get the image runing `docker run -it db-converter`.
+Get the image running `docker run -it db-converter`.
 
 You can specify config, input, and output volumes as follows and provide the required files as demonstrated in this repository:
 
@@ -228,9 +231,9 @@ You can specify config, input, and output volumes as follows and provide the req
 docker run -v ./config:/app/config -v ./output:/app/output -v ./data:/app/ data db-converter
 ```
 
-To support the use of CUDA inside Docker you will first need to set up the Nvidia container toolkit as described [here](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html).
+To support the use of CUDA inside Docker, you will first need to set up the Nvidia container toolkit as described [here](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html).
 
-After that, docker can be run with cuda support as follows:
+After that, Docker can be run with CUDA support as follows:
 
 ```
 docker run -v ./config:/app/config -v ./output:/app/output -v ./data:/app/data --runtime=nvidia --gpus all db-converter
@@ -239,9 +242,9 @@ docker run -v ./config:/app/config -v ./output:/app/output -v ./data:/app/data -
 
 ## Docker compose
 
-For the ease of use we further provide a `docker-compose.yml` in this repository. You can either copy it to your local system or just clone the whole repository, as described earlier. CUDA support is enabled by default, so make sure you prepared your execution system as described in the Docker only block above, or remove everyting including and after the `deploy:` key in the docker-compose file.
+For ease of use, we further provide a `docker-compose.yml` in this repository. You can either copy it to your local system or just clone the whole repository, as described earlier. CUDA support is enabled by default, so make sure you have prepared your execution system as described in the Docker only block above, or remove everything including and after the `deploy:` key in the docker-compose file.
 
-To adjust config, input, and output directory you can edit the left side of the volume declaration in the docker-compose file:
+To adjust the config, input, and output director,y you can edit the left side of the volume declaration in the docker-compose file:
 
 ```yaml
 volumes:
@@ -250,16 +253,16 @@ volumes:
   - $data_directory:/app/data
 ```
 
-NOTE: Do not adjust these top-level directories using the config files, as that will create a missmatch with where the docker-compose volumes will be mounted to!
+NOTE: Do not adjust these top-level directories using the config files, as that will create a mismatch with where the docker-compose volumes will be mounted to!
 
 
-If you want to use Weights & Biases to monitor the training progress and do want to provide the API key through the adequate config file you will have to launch the docker container in interactive mode:
+If you want to use Weights & Biases to monitor the training progress and do want to provide the API key through the adequate config file, you will have to launch the Docker container in interactive mode:
 
 ```bash
 docker compose run --rm db-conv
 ```
 
-Otherwise, if you either specify your API key through the config file or do not want to connect to Weights & Biases at all you can simply one of the following commands:
+Otherwise, if you either specify your API key through the config file or do not want to connect to Weights & Biases at all, you can simplyuse  one of the following commands:
 
 
 To run in the background:
