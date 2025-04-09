@@ -151,7 +151,13 @@ If training suggests one is more stronger than the other, you may try regulariza
 
 ### hyperparameter tuning wisdom:
 Check the plots and change the loss component weightage.
-$m$ and $i$ should converge ideally at a similar speed. Otherwise, one is more powerful than the other. 
+$m$/ forward DB converter / mapper and $i$ /backward DB converter / inverter should converge ideally at a similar speed. Otherwise, one is more powerful than the other. 
+The total loss of $m$ is called `mapping_loss` and the total loss of $i$ is called `invertering_loss`. Here are the components of the loss. 
+`l1_loss` = $L_1$ distance
+`l2_loss` = $L_2$ distance
+`tji_loss` = NTL (neighbourhood topology loss)
+`hce_loss`= HC entropy loss component
+`pt_loss` = cosine similarity loss
 batch_size: A bigger batch size helps, but on GPU it might be limited by VRAM.
 
 
