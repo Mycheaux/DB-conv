@@ -1,8 +1,7 @@
-name: dl3
+name: dl_gpu_2
 channels:
-  - defaults
+  - https://repo.anaconda.com/pkgs/main
+  - https://repo.anaconda.com/pkgs/r
 dependencies:
-  - lightning
-  - wandb
-  - numpy=2.0.2
-prefix: /Users/supratim/opt/anaconda3/envs/dl3
+  - python=3.12
+prefix: /home/bbc2429/DLenv/anaconda3/envs/dl_gpu_2
