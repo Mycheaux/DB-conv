@@ -63,3 +63,4 @@ def run_test():
     np.savetxt(str(output_data_path + "/" + load_project_name + "/" + load_model_name+ "/" + load_epoch_name+ "/" + "DB-B_reconverted.csv"), x_hat_hat_test, delimiter=',', fmt='%d')
     
     print ('Files are saved to output/<porject_name>/<model_name>/<epoch_name>')
+    print ("saved in both npy and csv format")
