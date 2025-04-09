@@ -221,7 +221,7 @@ volumes:
   - $data_directory:/app/data
 ```
 
-NOTE: Do not adjust the directories using the config files, as that will create a missmatch with where the docker-compose volumes will be mounted to!
+NOTE: Do not adjust these top-level directories using the config files, as that will create a missmatch with where the docker-compose volumes will be mounted to!
 
 
 If you want to use Weights & Biases to monitor the training progress and do want to provide the API key through the adequate config file you will have to launch the docker container in interactive mode:
