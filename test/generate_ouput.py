@@ -18,11 +18,13 @@ def run_test():
 
 
     data_path_config = read_config('config/data_path.yaml')
-    load_model_path = data_path_config.get('load_model_path', 'output/models')
-    load_project_name = data_path_config.get('load_project_name','app-test')
-    load_model_name = data_path_config.get('load_model_name','m0t0')
-    load_epoch_name = data_path_config.get('load_epoch_name','last.ckpt')
-    batch_size = data_path_config.get('batch_size', 24)
+    general_config = read_config('config/config.yaml')
+    
+    load_model_path = general_config.get('load_model_path', 'output/models')
+    load_project_name = general_config.get('load_project_name','app-test')
+    load_model_name = general_config.get('load_model_name','m0t0')
+    load_epoch_name = general_config.get('load_epoch_name','last.ckpt')
+    batch_size = general_config.get('batch_size', 24)
     #Input data path
     data_path =  data_path_config.get('data_path',"data/preprocessed")
     x_test_path = data_path + '/'+ data_path_config.get('x_test','za_test.npy')
@@ -49,8 +51,8 @@ def run_test():
     np.save(str(output_data_path + "/" + load_project_name + "/" + load_model_name+ "/" + load_epoch_name+ "/" + "DB-A_converted.npy"), y_hat_test)
     np.save(str(output_data_path + "/" + load_project_name + "/" + load_model_name+ "/" + load_epoch_name+ "/" + "DB-A_reconverted.npy"), y_hat_hat_test)
     
-    np.savetxt(str(output_data_path + "/" + load_project_name + "/" + load_model_name+ "/" + load_epoch_name+ "/" + "DB-A_converted.csv"), y_hat_test, delimiter=',', fmt='%d')
-    np.savetxt(str(output_data_path + "/" + load_project_name + "/" + load_model_name+ "/" + load_epoch_name+ "/" + "DB-A_reconverted.csv"), y_hat_hat_test, delimiter=',', fmt='%d')
+    np.savetxt(str(output_data_path + "/" + load_project_name + "/" + load_model_name+ "/" + load_epoch_name+ "/" + "DB-A_converted.csv"), y_hat_test, delimiter=',')
+    np.savetxt(str(output_data_path + "/" + load_project_name + "/" + load_model_name+ "/" + load_epoch_name+ "/" + "DB-A_reconverted.csv"), y_hat_hat_test, delimiter=',')
     
     # Inverter outputs
     x_hat_test = i(y_test_tt).detach().cpu().numpy()
@@ -59,8 +61,8 @@ def run_test():
     np.save(str(output_data_path + "/" + load_project_name + "/" + load_model_name+ "/" + load_epoch_name+ "/" + "DB-B_converted.npy"), x_hat_test)
     np.save(str(output_data_path + "/" + load_project_name + "/" + load_model_name+ "/" + load_epoch_name+ "/" + "DB-B_reconverted.npy"), x_hat_hat_test)
     
-    np.savetxt(str(output_data_path + "/" + load_project_name + "/" + load_model_name+ "/" + load_epoch_name+ "/" + "DB-B_converted.csv"), x_hat_test, delimiter=',', fmt='%d')
-    np.savetxt(str(output_data_path + "/" + load_project_name + "/" + load_model_name+ "/" + load_epoch_name+ "/" + "DB-B_reconverted.csv"), x_hat_hat_test, delimiter=',', fmt='%d')
+    np.savetxt(str(output_data_path + "/" + load_project_name + "/" + load_model_name+ "/" + load_epoch_name+ "/" + "DB-B_converted.csv"), x_hat_test, delimiter=',')
+    np.savetxt(str(output_data_path + "/" + load_project_name + "/" + load_model_name+ "/" + load_epoch_name+ "/" + "DB-B_reconverted.csv"), x_hat_hat_test, delimiter=',') # add , fmt='%.6f' to save space 
     
     print ('Files are saved to output/<porject_name>/<model_name>/<epoch_name>')
     print ("saved in both npy and csv format")
